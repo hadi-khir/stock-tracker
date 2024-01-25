@@ -99,21 +99,96 @@ export async function load({ fetch }) {
 // 262085 = value
 // 262086 = eps revision
 
-console.log(screenerResultsData);
+	const ratingsMap = new Map();
+	ratingsMap.set('marketCap', '7935');
+	ratingsMap.set('wallStreetRating', '230572');
+	ratingsMap.set('quantRating', '262081');
+	ratingsMap.set('saAnalystRating', '642075');
+	ratingsMap.set('growth', '262082');
+	ratingsMap.set('momentum', '262084');
+	ratingsMap.set('profitability', '262083');
+	ratingsMap.set('value', '262085');
+	ratingsMap.set('epsRevision', '262086');
+
+	const gradeMap = new Map();
+	gradeMap.set(1, 'A+');
+	gradeMap.set(2, 'A');
+	gradeMap.set(3, 'A-');
+	gradeMap.set(4, 'B+');
+	gradeMap.set(5, 'B');
+	gradeMap.set(6, 'B-');
+
 
 	const combinedStockData = screenerResultsData.data.map((/** @type {any} */ stock) => {
 		
 		const stockId = stock.id;
 		const companyName = stock.attributes.companyName;
 		const ticker = stock.attributes.name;
-		const stockData = getStockData(ticker);
+		//const stockData = getStockData(ticker);
+
+		//get market cap
+		const marketCap = metricsData.data.find((/** @type {any} */ metric) => {
+			return metric.id === `[${stockId}, ${ratingsMap.get('marketCap')}]`;
+		})?.attributes?.value;
+
+		// convert it to string and append 'B' to it
+		const marketCapInBillionsString = (Math.round((Number(marketCap) / 1000000000) * 100) / 100).toString() + 'B';
+
+		// get wall street rating
+		const wallStreetRating = metricsData.data.find((/** @type {any} */ metric) => {
+			return metric.id === `[${stockId}, ${ratingsMap.get('wallStreetRating')}]`;
+		})?.attributes?.value;
+
+		// get quant rating
+		const quantRating = metricsData.data.find((/** @type {any} */ metric) => {
+			return metric.id === `[${stockId}, ${ratingsMap.get('quantRating')}]`;
+		})?.attributes?.value;
+
+		// get SA Analyst rating
+		const saAnalystRating = metricsData.data.find((/** @type {any} */ metric) => {
+			return metric.id === `[${stockId}, ${ratingsMap.get('saAnalystRating')}]`;
+		})?.attributes?.value;
+
+		// get growth
+		const growth = gradeMap.get(tickerGradeData.data.find((/** @type {any} */ metric) => {
+			return metric.id === `${stockId},${ratingsMap.get('growth')},main_quant`;
+		})?.attributes?.grade);
+
+		// get momentum
+		const momentum = gradeMap.get(tickerGradeData.data.find((/** @type {any} */ metric) => {
+			return metric.id === `${stockId},${ratingsMap.get('momentum')},main_quant`;
+		})?.attributes?.grade);
+
+		// get profitability
+		const profitability = gradeMap.get(tickerGradeData.data.find((/** @type {any} */ metric) => {
+			return metric.id === `${stockId},${ratingsMap.get('profitability')},main_quant`;
+		})?.attributes?.grade);
+
+		// get value
+		const value = gradeMap.get(tickerGradeData.data.find((/** @type {any} */ metric) => {
+			return metric.id === `${stockId},${ratingsMap.get('value')},main_quant`;
+		})?.attributes?.grade);
+
+		// get eps revision
+		const epsRevision = gradeMap.get(tickerGradeData.data.find((/** @type {any} */ metric) => {
+			return metric.id === `${stockId},${ratingsMap.get('epsRevision')},main_quant`;
+		})?.attributes?.grade);
 
 		// append stock data to return 
 		return {
 			stockId: stockId,
 			companyName: companyName,
 			ticker: ticker,
-			stockData: stockData
+			marketCap: marketCapInBillionsString,
+			wallStreetRating: Math.round(Number(wallStreetRating) * 100) / 100,
+			quantRating: Math.round(Number(quantRating) * 100) / 100,
+			saAnalystRating: Math.round(Number(saAnalystRating) * 100) / 100,
+			growth: growth,
+			momentum: momentum,
+			profitability: profitability,
+			value: value,
+			epsRevision: epsRevision,
+			//stockData: stockData
 		}
 
 	});
@@ -121,31 +196,30 @@ console.log(screenerResultsData);
   return {
     props: {
       data: {
-		screener: screenerResultsData,
-		metrics: metricsData,
-		tickerGrade: tickerGradeData,
 		combinedStockData: combinedStockData
 	  },
     },
   };
 }
 
-const getStockData = async (/** @type {any} */ ticker) => {
+// const getStockData = async (/** @type {any} */ ticker) => {
 
-	const date = "2024-01-25";
-	const url = `https://seekingalpha.com/api/v3/historical_prices?filter[ticker][slug]=${ticker}&filter[for_date]=${date}&sort=as_of_date`;
-	const stockReq = await fetch(
-	url,
-	{
-	  method: "GET",
-	  headers: {
-		"Content-Type": "application/json",
-		"Accept": "application/json",
-		"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
-	  },
-	}
-  );
-  const stockData = await stockReq.json();
+// 	// add a 3 second delay
+// 	await new Promise(resolve => setTimeout(resolve, 3000));
+// 	const date = "2024-01-25";
+// 	const url = `https://seekingalpha.com/api/v3/historical_prices?filter[ticker][slug]=${ticker}&filter[for_date]=${date}&sort=as_of_date`;
+// 	const stockReq = await fetch(
+// 	url,
+// 	{
+// 	  method: "GET",
+// 	  headers: {
+// 		"Content-Type": "application/json",
+// 		"Accept": "application/json",
+// 		"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+// 	  },
+// 	}
+//   );
+//   const stockData = await stockReq.json();
 
-  return stockData;
-}
+//   return stockData;
+// }

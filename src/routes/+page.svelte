@@ -17,7 +17,6 @@
 	 * @type {any}
 	 */
 	export let data;
-	console.log(data);
 
 
 </script>
