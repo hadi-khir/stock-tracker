@@ -56,7 +56,7 @@ export async function load({ fetch }) {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        "User-Agent": "Mozilla/5.0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
       },
     }
   );
@@ -69,7 +69,7 @@ export async function load({ fetch }) {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        "User-Agent": "Mozilla/5.0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
       },
     }
   );
@@ -88,13 +88,64 @@ export async function load({ fetch }) {
   );
   const tickerGradeData = await tickerGradeReq.json();
 
+// 7935 = market cap 
+// 230572 = wall street rating
+// 262081 = quant rating
+// 642075 = SA Analyst rating
+
+// 262082 = growth
+// 262084 = momentum
+// 262083 = profitability
+// 262085 = value
+// 262086 = eps revision
+
+console.log(screenerResultsData);
+
+	const combinedStockData = screenerResultsData.data.map((/** @type {any} */ stock) => {
+		
+		const stockId = stock.id;
+		const companyName = stock.attributes.companyName;
+		const ticker = stock.attributes.name;
+		const stockData = getStockData(ticker);
+
+		// append stock data to return 
+		return {
+			stockId: stockId,
+			companyName: companyName,
+			ticker: ticker,
+			stockData: stockData
+		}
+
+	});
+
   return {
     props: {
       data: {
 		screener: screenerResultsData,
 		metrics: metricsData,
-		tickerGrade: tickerGradeData
+		tickerGrade: tickerGradeData,
+		combinedStockData: combinedStockData
 	  },
     },
   };
+}
+
+const getStockData = async (/** @type {any} */ ticker) => {
+
+	const date = "2024-01-25";
+	const url = `https://seekingalpha.com/api/v3/historical_prices?filter[ticker][slug]=${ticker}&filter[for_date]=${date}&sort=as_of_date`;
+	const stockReq = await fetch(
+	url,
+	{
+	  method: "GET",
+	  headers: {
+		"Content-Type": "application/json",
+		"Accept": "application/json",
+		"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+	  },
+	}
+  );
+  const stockData = await stockReq.json();
+
+  return stockData;
 }
