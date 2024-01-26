@@ -119,7 +119,7 @@ export async function load({ fetch }) {
 	gradeMap.set(6, 'B-');
 
 
-	const combinedStockData = screenerResultsData.data.map((/** @type {any} */ stock) => {
+	const combinedStockData = screenerResultsData.data.map((/** @type {any} */ stock, /** @type {number} */ idx) => {
 		
 		const stockId = stock.id;
 		const companyName = stock.attributes.companyName;
@@ -131,7 +131,7 @@ export async function load({ fetch }) {
 			return metric.id === `[${stockId}, ${ratingsMap.get('marketCap')}]`;
 		})?.attributes?.value;
 
-		// convert it to string and append 'B' to it
+		// convert it to string and append 'B'
 		const marketCapInBillionsString = (Math.round((Number(marketCap) / 1000000000) * 100) / 100).toString() + 'B';
 
 		// get wall street rating
@@ -176,6 +176,7 @@ export async function load({ fetch }) {
 
 		// append stock data to return 
 		return {
+      rank: idx + 1,
 			stockId: stockId,
 			companyName: companyName,
 			ticker: ticker,

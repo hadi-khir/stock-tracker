@@ -1,25 +1,54 @@
-<script>
-
-
-// 7935 = market cap 
-// 230572 = wall street rating
-// 262081 = quant rating
-// 642075 = SA Analyst rating
-
-// 262082 = growth
-// 262084 = momentum
-// 262083 = profitability
-// 262085 = value
-// 262086 = eps revision
-
+<script lang="ts">
+	import { AppBar } from '@skeletonlabs/skeleton';
+	import { Table } from '@skeletonlabs/skeleton';
+	import type { TableSource } from '@skeletonlabs/skeleton';
+	import { tableMapperValues } from '@skeletonlabs/skeleton';
 
 	/**
 	 * @type {any}
 	 */
-	export let data;
+	export let data: any;
 
+	let tableSimple: TableSource;
 
+	const combinedStockData = data.props.data.combinedStockData;
+	tableSimple = {
+		// A list of heading labels.
+		head: [
+			'Rank',
+			'Company Name',
+			'Ticker',
+			'Market Cap',
+			'Wall Street Rating',
+			'Quant Rating',
+			'SA Analyst Rating',
+			'Growth',
+			'Momentum',
+			'Profitability',
+			'Value',
+			'EPS Revision'
+		],
+		// The data visibly shown in your table body UI.
+		body: tableMapperValues(combinedStockData, [
+			'rank',
+			'companyName',
+			'ticker',
+			'marketCap',
+			'wallStreetRating',
+			'quantRating',
+			'saAnalystRating',
+			'growth',
+			'momentum',
+			'profitability',
+			'value',
+			'epsRevision'
+		]),
+		// Optional: The data returned when interactive is enabled and a row is clicked.
+		//meta: tableMapperValues(sourceData, ['position', 'name', 'symbol', 'weight']),
+		// Optional: A list of footer labels.
+		foot: ['Total', '', `<code class="code">${combinedStockData.length + 1}</code>`]
+	};
 </script>
 
-<pre>{JSON.stringify(data, null, 2)}</pre>
-```
+<Table source={tableSimple} interactive={true} />
+
