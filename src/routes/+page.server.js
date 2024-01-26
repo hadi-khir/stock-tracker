@@ -132,7 +132,10 @@ export async function load({ fetch }) {
 		})?.attributes?.value;
 
 		// convert it to string and append 'B'
-		const marketCapInBillionsString = (Math.round((Number(marketCap) / 1000000000) * 100) / 100).toString() + 'B';
+		let marketCapInBillionsString = parseFloat(marketCap) > 999999999 ? ((Number(marketCap) / 1000000000).toFixed(2)).toString() + 'B' : ((Number(marketCap) / 10000000).toFixed(2)).toString() + 'M';
+    if (marketCap === undefined || isNaN(marketCap)) {
+      marketCapInBillionsString = 'N/A';
+    }
 
 		// get wall street rating
 		const wallStreetRating = metricsData.data.find((/** @type {any} */ metric) => {
@@ -140,7 +143,7 @@ export async function load({ fetch }) {
 		})?.attributes?.value;
 
 		// get quant rating
-		const quantRating = metricsData.data.find((/** @type {any} */ metric) => {
+		let quantRating = metricsData.data.find((/** @type {any} */ metric) => {
 			return metric.id === `[${stockId}, ${ratingsMap.get('quantRating')}]`;
 		})?.attributes?.value;
 
