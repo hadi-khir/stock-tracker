@@ -46,7 +46,7 @@
 		// Optional: The data returned when interactive is enabled and a row is clicked.
 		//meta: tableMapperValues(sourceData, ['position', 'name', 'symbol', 'weight']),
 		// Optional: A list of footer labels.
-		foot: ['Total', '', `<code class="code">${combinedStockData.length + 1}</code>`]
+		foot: ['Total', '', `<code class="code">${combinedStockData.length}</code>`]
 	};
 </script>
 
