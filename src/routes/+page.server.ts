@@ -127,7 +127,7 @@ const getScreenerResults = async () => {
   const reqType = "POST";
   const headers = {
     "Content-Type": "application/json",
-    Accept: "application/json",
+    "Accept": "application/json",
     "User-Agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
   };
@@ -145,7 +145,7 @@ const getMetricsData = async (slugs: string) => {
   const reqType = "GET";
   const headers = {
     "Content-Type": "application/json",
-    Accept: "application/json",
+    "Accept": "application/json",
     "User-Agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
   };
@@ -163,7 +163,7 @@ const getTickerData = async (slugs: string) => {
   const reqType = "GET";
   const headers = {
     "Content-Type": "application/json",
-    Accept: "application/json",
+    "Accept": "application/json",
     "User-Agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
   };
