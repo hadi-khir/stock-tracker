@@ -213,12 +213,10 @@ export async function load() {
       const companyName = stock.attributes.companyName;
       const ticker = stock.attributes.name;
 
-      //get market cap
       const marketCap = metricsData.data.find((/** @type {any} */ metric) => {
         return metric.id === `[${stockId}, ${ratingsMap.get("marketCap")}]`;
       })?.attributes?.value;
 
-      // convert it to string and append 'B'
       let marketCapInBillionsString: string;
       if (marketCap === undefined || isNaN(marketCap)) {
         marketCapInBillionsString = "N/A";
@@ -229,7 +227,6 @@ export async function load() {
             : (Number(marketCap) / 10000000).toFixed(2).toString() + "M";
       }
 
-      // get wall street rating
       const wallStreetRating: number | undefined = metricsData.data.find(
         (metric) => {
           return (
@@ -238,43 +235,38 @@ export async function load() {
         }
       )?.attributes?.value;
 
-      // get quant rating
       const quantRating: number | undefined = metricsData.data.find((
-        /** @type {any} */ metric
+        metric
       ) => {
         return metric.id === `[${stockId}, ${ratingsMap.get("quantRating")}]`;
       })?.attributes?.value;
 
-      // get SA Analyst rating
       const saAnalystRating: number | undefined = metricsData.data.find((
-        /** @type {any} */ metric
+        metric
       ) => {
         return (
           metric.id === `[${stockId}, ${ratingsMap.get("saAnalystRating")}]`
         );
       })?.attributes?.value;
 
-      // get growth
       const growth: string = gradeMap.get(
-        tickerGradeData.data.find((/** @type {any} */ metric) => {
+        tickerGradeData.data.find((metric) => {
           return (
             metric.id === `${stockId},${ratingsMap.get("growth")},main_quant`
           );
         })?.attributes?.grade
       );
 
-      // get momentum
       const momentum: string = gradeMap.get(
-        tickerGradeData.data.find((/** @type {any} */ metric) => {
+        tickerGradeData.data.find((metric) => {
           return (
             metric.id === `${stockId},${ratingsMap.get("momentum")},main_quant`
           );
         })?.attributes?.grade
       );
 
-      // get profitability
       const profitability: string = gradeMap.get(
-        tickerGradeData.data.find((/** @type {any} */ metric) => {
+        tickerGradeData.data.find((metric) => {
           return (
             metric.id ===
             `${stockId},${ratingsMap.get("profitability")},main_quant`
@@ -282,9 +274,8 @@ export async function load() {
         })?.attributes?.grade
       );
 
-      // get value
       const value: string = gradeMap.get(
-        tickerGradeData.data.find((/** @type {any} */ metric) => {
+        tickerGradeData.data.find((metric) => {
           return (
             metric.id === `${stockId},${ratingsMap.get("value")},main_quant`
           );
@@ -292,7 +283,7 @@ export async function load() {
       );
 
       const epsRevision: string = gradeMap.get(
-        tickerGradeData.data.find((/** @type {any} */ metric) => {
+        tickerGradeData.data.find((metric) => {
           return (
             metric.id ===
             `${stockId},${ratingsMap.get("epsRevision")},main_quant`
