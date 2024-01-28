@@ -1,13 +1,9 @@
 <script lang="ts">
-	import { AppBar } from '@skeletonlabs/skeleton';
 	import { Table } from '@skeletonlabs/skeleton';
 	import type { TableSource } from '@skeletonlabs/skeleton';
 	import { tableMapperValues } from '@skeletonlabs/skeleton';
 
-	/**
-	 * @type {any}
-	 */
-	export let data: any;
+	export let data; 
 
 	let tableSimple: TableSource;
 
@@ -28,7 +24,6 @@
 			'Value',
 			'EPS Revision'
 		],
-		// The data visibly shown in your table body UI.
 		body: tableMapperValues(combinedStockData, [
 			'rank',
 			'companyName',
@@ -43,9 +38,6 @@
 			'value',
 			'epsRevision'
 		]),
-		// Optional: The data returned when interactive is enabled and a row is clicked.
-		//meta: tableMapperValues(sourceData, ['position', 'name', 'symbol', 'weight']),
-		// Optional: A list of footer labels.
 		foot: ['Total', '', `<code class="code">${combinedStockData.length}</code>`]
 	};
 </script>
