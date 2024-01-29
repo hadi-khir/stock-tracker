@@ -224,7 +224,7 @@ export async function load() {
         marketCapInBillionsString =
           marketCap > 999999999
             ? (Number(marketCap) / 1000000000).toFixed(2).toString() + "B"
-            : (Number(marketCap) / 10000000).toFixed(2).toString() + "M";
+            : (Number(marketCap) / 1000000).toFixed(2).toString() + "M";
       }
 
       const wallStreetRating: number | undefined = metricsData.data.find(
