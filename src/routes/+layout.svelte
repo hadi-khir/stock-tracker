@@ -1,29 +1,31 @@
 <script>
-	import { AppBar } from '@skeletonlabs/skeleton';
+	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
 	import '../app.pcss';
-	import Icon from '$lib/assets/dijla_cafe.png';
+	import Navigation from '$lib/Navigation/Navigation.svelte';
 </script>
 
-<AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
-	<svelte:fragment slot="lead"><img class="max-w-8" src={Icon} alt="dijla cafe" /></svelte:fragment>
-
-	<a
-		href="/"
-		class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-		>Top Stocks</a
-	>
-	<a
-		href="/"
-		class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-		>Top Growth Stocks</a
-	>
-	<a
-		href="/"
-		class="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-		Top Value Stocks
-	</a>
-
-	<svelte:fragment slot="trail">(actions)</svelte:fragment>
-</AppBar>
-
-<slot />
+<AppShell slotSidebarLeft="bg-surface-500/5 w-0 lg:w-64">
+	<svelte:fragment slot="header">
+		<AppBar>
+			<svelte:fragment slot="lead">
+				<div class="flex items-center">
+					<button class="btn btn-sm mr-4 lg:hidden">
+						<span>
+							<svg viewBox="0 0 100 80" class="fill-token h-4 w-4">
+								<rect width="100" height="20" />
+								<rect y="30" width="100" height="20" />
+								<rect y="60" width="100" height="20" />
+							</svg>
+						</span>
+					</button>
+					<strong class="text-xl uppercase">Stock Tracker</strong>
+				</div>
+			</svelte:fragment>
+			<svelte:fragment slot="trail">(actions)</svelte:fragment>
+		</AppBar>
+	</svelte:fragment>
+	<svelte:fragment slot="sidebarLeft">
+		<Navigation />
+	</svelte:fragment>
+	<slot />
+</AppShell>
