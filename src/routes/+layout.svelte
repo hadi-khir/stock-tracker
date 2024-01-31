@@ -2,6 +2,7 @@
 	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
 	import '../app.pcss';
 	import Navigation from '$lib/Navigation/Navigation.svelte';
+	import GitHubIcon from '$lib/assets/github-mark.png';
 </script>
 
 <AppShell slotSidebarLeft="bg-surface-500/5 w-0 lg:w-64">
@@ -21,7 +22,11 @@
 					<strong class="text-xl uppercase">Stock Tracker</strong>
 				</div>
 			</svelte:fragment>
-			<svelte:fragment slot="trail">(actions)</svelte:fragment>
+			<svelte:fragment slot="trail">
+				<a target="_blank" rel="noopener noreferrer" href="https://github.com/hadi-khir/stock-tracker">
+					<img class="w-8" src={GitHubIcon} alt='GitHub Icon'/>
+				</a>
+			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft">
