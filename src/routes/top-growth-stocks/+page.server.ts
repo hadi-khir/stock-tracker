@@ -75,46 +75,9 @@ interface CombinedStockData {
 
 const screenerReqBody = {
   filter: {
-    quant_rating: {
-      gte: 3.5,
-      lte: 5,
-      exclude: false,
-    },
-    sell_side_rating: {
-      gte: 3.5,
-      lte: 5,
-      exclude: false,
-    },
-    value_category: {
-      gte: 1,
-      lte: 6,
-      exclude: false,
-    },
-    growth_category: {
-      gte: 1,
-      lte: 6,
-      exclude: false,
-    },
-    profitability_category: {
-      gte: 1,
-      lte: 6,
-      exclude: false,
-    },
-    momentum_category: {
-      gte: 1,
-      lte: 6,
-      exclude: false,
-    },
-    eps_revisions_category: {
-      gte: 1,
-      lte: 6,
-      exclude: false,
-    },
-    authors_rating: {
-      gte: 3.5,
-      lte: 5,
-      exclude: false,
-    },
+    quant_rating: { gte: 3.5, lte: 5, exclude: false },
+    growth_category: { gte: 1, lte: 2, exclude: false },
+    marketcap_display: { gte: 1000000000, exclude: false },
   },
   page: 1,
   per_page: 100,
@@ -127,7 +90,7 @@ const getScreenerResults = async () => {
   const reqType = "POST";
   const headers = {
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
     "User-Agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
   };
@@ -145,7 +108,7 @@ const getMetricsData = async (slugs: string) => {
   const reqType = "GET";
   const headers = {
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
     "User-Agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
   };
@@ -163,7 +126,7 @@ const getTickerData = async (slugs: string) => {
   const reqType = "GET";
   const headers = {
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
     "User-Agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
   };
@@ -242,19 +205,19 @@ export async function load() {
         }
       )?.attributes?.value;
 
-      const quantRating: number | undefined = metricsData.data.find((
-        metric
-      ) => {
-        return metric.id === `[${stockId}, ${ratingsMap.get("quantRating")}]`;
-      })?.attributes?.value;
+      const quantRating: number | undefined = metricsData.data.find(
+        (metric) => {
+          return metric.id === `[${stockId}, ${ratingsMap.get("quantRating")}]`;
+        }
+      )?.attributes?.value;
 
-      const saAnalystRating: number | undefined = metricsData.data.find((
-        metric
-      ) => {
-        return (
-          metric.id === `[${stockId}, ${ratingsMap.get("saAnalystRating")}]`
-        );
-      })?.attributes?.value;
+      const saAnalystRating: number | undefined = metricsData.data.find(
+        (metric) => {
+          return (
+            metric.id === `[${stockId}, ${ratingsMap.get("saAnalystRating")}]`
+          );
+        }
+      )?.attributes?.value;
 
       const growth: string = gradeMap.get(
         tickerGradeData.data.find((metric) => {

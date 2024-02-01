@@ -9,23 +9,22 @@
             <hr />
         </li>
         <li>
-            <a href="/">
+            <a href="/top-growth-stocks">
                 <span class="flex-auto">Top Growth Stocks</span>
             </a>
             <hr />
         </li>
         <li>
-            <a href="/">
+            <a href="/top-value-stocks">
                 <span class="flex-auto">Top Value Stocks</span>
             </a>
             <hr />
         </li>
         <li>
-            <a href="/">
+            <a href="/top-technology-stocks">
                 <span class="flex-auto">Top Technology Stocks</span>
             </a>
             <hr />
         </li>
-        <!-- TODO: add github stuff -->
     </ul>
 </nav>
