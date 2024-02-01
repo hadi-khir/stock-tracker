@@ -75,44 +75,22 @@ interface CombinedStockData {
 
 const screenerReqBody = {
   filter: {
-    quant_rating: {
-      gte: 3.5,
-      lte: 5,
-      exclude: false,
-    },
-    sell_side_rating: {
-      gte: 3.5,
-      lte: 5,
-      exclude: false,
-    },
-    value_category: {
-      gte: 1,
-      lte: 6,
-      exclude: false,
-    },
-    growth_category: {
-      gte: 1,
-      lte: 6,
-      exclude: false,
-    },
-    profitability_category: {
-      gte: 1,
-      lte: 6,
-      exclude: false,
-    },
-    momentum_category: {
-      gte: 1,
-      lte: 6,
-      exclude: false,
-    },
-    eps_revisions_category: {
-      gte: 1,
-      lte: 6,
-      exclude: false,
-    },
-    authors_rating: {
-      gte: 3.5,
-      lte: 5,
+    quant_rating: { gte: 1, lte: 5, exclude: false },
+    industry_id: {
+      in: [
+        45102010,
+        45102030,
+        45103010,
+        45103020,
+        45201020,
+        45202030,
+        45203010,
+        45203015,
+        45203020,
+        45203030,
+        45301010,
+        45301020,
+      ],
       exclude: false,
     },
   },
@@ -127,7 +105,7 @@ const getScreenerResults = async () => {
   const reqType = "POST";
   const headers = {
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
     "User-Agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
   };
@@ -145,7 +123,7 @@ const getMetricsData = async (slugs: string) => {
   const reqType = "GET";
   const headers = {
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
     "User-Agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
   };
@@ -163,7 +141,7 @@ const getTickerData = async (slugs: string) => {
   const reqType = "GET";
   const headers = {
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
     "User-Agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
   };
@@ -242,19 +220,19 @@ export async function load() {
         }
       )?.attributes?.value;
 
-      const quantRating: number | undefined = metricsData.data.find((
-        metric
-      ) => {
-        return metric.id === `[${stockId}, ${ratingsMap.get("quantRating")}]`;
-      })?.attributes?.value;
+      const quantRating: number | undefined = metricsData.data.find(
+        (metric) => {
+          return metric.id === `[${stockId}, ${ratingsMap.get("quantRating")}]`;
+        }
+      )?.attributes?.value;
 
-      const saAnalystRating: number | undefined = metricsData.data.find((
-        metric
-      ) => {
-        return (
-          metric.id === `[${stockId}, ${ratingsMap.get("saAnalystRating")}]`
-        );
-      })?.attributes?.value;
+      const saAnalystRating: number | undefined = metricsData.data.find(
+        (metric) => {
+          return (
+            metric.id === `[${stockId}, ${ratingsMap.get("saAnalystRating")}]`
+          );
+        }
+      )?.attributes?.value;
 
       const growth: string = gradeMap.get(
         tickerGradeData.data.find((metric) => {
