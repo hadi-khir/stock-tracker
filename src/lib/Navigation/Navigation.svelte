@@ -3,25 +3,25 @@
     <hr />
     <ul class="p-2">
         <li>
-            <a href="/">
+            <a on:click href="/">
                 <span class="flex-auto">Top Stocks</span>
             </a>
             <hr />
         </li>
         <li>
-            <a href="/top-growth-stocks">
+            <a on:click href="/top-growth-stocks">
                 <span class="flex-auto">Top Growth Stocks</span>
             </a>
             <hr />
         </li>
         <li>
-            <a href="/top-value-stocks">
+            <a on:click href="/top-value-stocks">
                 <span class="flex-auto">Top Value Stocks</span>
             </a>
             <hr />
         </li>
         <li>
-            <a href="/top-technology-stocks">
+            <a on:click href="/top-technology-stocks">
                 <span class="flex-auto">Top Technology Stocks</span>
             </a>
             <hr />
