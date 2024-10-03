@@ -32,12 +32,12 @@ const getScreenerResults = () => {
   return fetchData(url, "POST", screenerReqBody);
 };
 
-const getMetricsData = async (slugs: string) => {
+const getMetricsData = (slugs: string) => {
   const url = `https://seekingalpha.com/api/v3/metrics?filter[fields]=quant_rating%2Cauthors_rating%2Csell_side_rating%2Cmarketcap_display%2Cdividend_yield&filter[slugs]=${slugs}&minified=false`;
   return fetchData(url, "GET");
 };
 
-const getTickerData = async (slugs: string) => {
+const getTickerData = (slugs: string) => {
   const url = `https://seekingalpha.com/api/v3/ticker_metric_grades?filter[fields]=value_category%2Cgrowth_category%2Cprofitability_category%2Cmomentum_category%2Ceps_revisions_category&filter[slugs]=${slugs}&filter[algos][]=etf&filter[algos][]=dividends&filter[algos][]=main_quant&filter[algos][]=reit&filter[algos][]=reit_dividend&minified=false`;
   return fetchData(url, "GET");
 };

@@ -42,5 +42,5 @@
 	};
 </script>
 
-<Table source={tableSimple} interactive={true} />
+<Table className="overflow-x-auto" source={tableSimple} interactive={true} />
 
